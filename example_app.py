@@ -1,12 +1,12 @@
 import streamlit as st
 from keboola_streamlit import KeboolaStreamlit
-import requests
 
 #Required ROLE id
 REQUIRED_ROLE_ID = st.secrets['REQUIRED_ROLE_ID']
 STORAGE_API_TOKEN = st.secrets['STORAGE_API_TOKEN']
+KEBOOLA_HOSTNAME = st.secrets['KEBOOLA_HOSTNAME']
 
-kst = KeboolaStreamlit('https://connection.europe-west3.gcp.keboola.com', STORAGE_API_TOKEN)
+kst = KeboolaStreamlit(KEBOOLA_HOSTNAME, STORAGE_API_TOKEN)
 
 kst.set_dev_mockup_headers({
     'X-Kbc-User-Email': 'vojta@dev.com',
