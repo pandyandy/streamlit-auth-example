@@ -1,54 +1,21 @@
 import streamlit as st
-from kbcstorage.client import Client
-from streamlit.web.server.websocket_headers import _get_websocket_headers
+from keboola_streamlit import KeboolaStreamlit
 import requests
 
-websocket_headers = _get_websocket_headers()
-
 #Required ROLE id
-REQUIRED_ROLE_ID = '30e3f1fb-5028-4c1c-9a98-ebaf8b668898'
-LOGOUT_URL = 'https://630064.hub.europe-west3.gcp.keboola.com/_proxy/sign_out'
-STORAGE_API_TOKEN = '336-45296-1e8hNxLoXBVpVdui1pAG0zJPADbj63dPoiHtlooI'
+REQUIRED_ROLE_ID = st.secrets['REQUIRED_ROLE_ID']
+STORAGE_API_TOKEN = st.secrets['STORAGE_API_TOKEN']
+
+kst = KeboolaStreamlit('https://connection.europe-west3.gcp.keboola.com', STORAGE_API_TOKEN)
+
+kst.set_dev_mockup_headers({
+    'X-Kbc-User-Email': 'vojta@dev.com',
+    'X-Kbc-User-Roles': ['123', '30e3f1fb-5028-4c1c-9a98-ebaf8b668898', 'abc'],
+    'X-Forwarded-Host': 'https://mock-server/non-existing-app'
+})
 
 
-if('X-Kbc-User-Email' in websocket_headers):
-    st.write('Using proxy')
-    st.write('Logged in as user:' + websocket_headers['X-Kbc-User-Email'])
-    st.link_button('Logout', LOGOUT_URL)
-    if(REQUIRED_ROLE_ID not in websocket_headers):
-        st.error("You don't have priviledges to use this applicaiton")
-        st.stop()
+kst.authCheck(REQUIRED_ROLE_ID)
 
-else:
-    st.write('Not using proxy')
-
-
-with st.expander("Headers:"):
-    st.write(websocket_headers)
-
-
-client = Client('https://connection.europe-west3.gcp.keboola.com/', STORAGE_API_TOKEN)
-
-def sendWriteData(tableId, data):
-    #client.tables.load(table_id=tableId,)
-    return 0
-
-
-def createEvent(jobId, user, data):
-    url = 'https://connection.europe-west3.gcp.keboola.com/v2/storage/events'
-    headers = {
-        'Content-Type': 'application/json',
-        'X-StorageApi-Token': '336-45296-1e8hNxLoXBVpVdui1pAG0zJPADbj63dPoiHtlooI'
-    }
-    data = {
-        'Message': 'Streamlit app write event',
-        'component': 'keboola.data-apps',
-        'type': 'info'
-    }
-    
-
-
-
-
-
-
+if st.button('Send event'):
+    kst.createEvent(123, {'data':'content'})
