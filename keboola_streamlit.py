@@ -13,6 +13,7 @@ class KeboolaStreamlit:
 
     def _get_headers(self):
         headers = _get_websocket_headers()
+        st.write(headers)
         if ('X-Kbc-User-Email' in headers):
             return headers
         elif (self.dev_mockup_headers != False):
