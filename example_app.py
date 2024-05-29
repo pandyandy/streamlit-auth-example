@@ -9,8 +9,8 @@ KEBOOLA_HOSTNAME = st.secrets['KEBOOLA_HOSTNAME']
 kst = KeboolaStreamlit(KEBOOLA_HOSTNAME, STORAGE_API_TOKEN)
 
 kst.set_dev_mockup_headers({
-    'X-Kbc-User-Email': 'vojta@dev.com',
-    'X-Kbc-User-Roles': ['123', '30e3f1fb-5028-4c1c-9a98-ebaf8b668898', 'abc'],
+    'X-Kbc-User-Email': 'user@dev.com',
+    'X-Kbc-User-Roles': ['123', '11111111-2222-3333-4444-1234567890', 'abc'],
     'X-Forwarded-Host': 'https://mock-server/non-existing-app'
 })
 
