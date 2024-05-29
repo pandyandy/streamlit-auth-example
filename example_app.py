@@ -14,5 +14,6 @@ kst.set_dev_mockup_headers({
     'X-Forwarded-Host': 'https://mock-server/non-existing-app'
 })
 
-
-kst.authCheck(REQUIRED_ROLE_ID)
+kst.auth_check(REQUIRED_ROLE_ID)
+if st.button('create event'):
+    kst.create_event(123, {'data':'of_event'})
