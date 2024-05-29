@@ -16,6 +16,3 @@ kst.set_dev_mockup_headers({
 
 
 kst.authCheck(REQUIRED_ROLE_ID)
-
-if st.button('Send event'):
-    kst.createEvent(123, {'data':'content'})
