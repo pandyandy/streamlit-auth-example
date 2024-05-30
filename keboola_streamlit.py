@@ -76,7 +76,7 @@ class KeboolaStreamlit:
         response = requests.post(url, headers=requestHeaders, json=requestData)
 
         if response.status_code == 201:
-            st.wirte('Event sent')
+            st.write('Event sent')
         else:
             st.write(f"Error: {response.status_code} - {response.text}")
 
