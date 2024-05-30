@@ -18,7 +18,6 @@ class KeboolaStreamlit:
 
     def _get_headers(self):
         headers = _get_websocket_headers()
-        st.write(headers)
         if ('X-Kbc-User-Email' in headers):
             return headers
         elif (self.dev_mockup_headers != False):
@@ -45,6 +44,7 @@ class KeboolaStreamlit:
             st.sidebar.write(f"Logged in as user: {headers['X-Kbc-User-Email']}")
             st.sidebar.link_button('Logout', '/_proxy/sign_out')
             with st.sidebar.expander('Show more'):
+                st.write(headers)
             if (required_role_id not in headers['X-Kbc-User-Roles']):
                 st.error("You don't have priviledges to use this application")
                 st.stop()
