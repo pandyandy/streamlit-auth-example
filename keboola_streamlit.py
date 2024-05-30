@@ -69,7 +69,7 @@ class KeboolaStreamlit:
                 "endpoint": '/v2/storage/tables/upload',
                 "event_type": "keboola_data_app_write",
                 "event_data": {"data":data},
-                "event_application": headers['X-Forwarded-Host'],
+                "event_application": headers['Origin'],
                 "event_job_id": jobId
             }
         }
